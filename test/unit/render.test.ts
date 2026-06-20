@@ -14,7 +14,7 @@ test('renders one list per enum', () => {
         ]
       }
     ]),
-    `import { IdempotencyStatus } from "@prisma/client";
+    `import { IdempotencyStatus } from "./enums";
 
 export const IdempotencyStatusList = [
   IdempotencyStatus.IN_PROGRESS,

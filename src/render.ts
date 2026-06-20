@@ -1,6 +1,6 @@
 import type { DatamodelEnum } from '@prisma/dmmf';
 
-export function renderEnumLists(enums: readonly DatamodelEnum[], importPath = '@prisma/client') {
+export function renderEnumLists(enums: readonly DatamodelEnum[], importPath = './enums') {
   if (enums.length === 0) {
     return '';
   }

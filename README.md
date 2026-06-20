@@ -24,7 +24,7 @@ enum IdempotencyStatus {
 The generator writes:
 
 ```ts
-import { IdempotencyStatus } from "@prisma/client";
+import { IdempotencyStatus } from "./enums";
 
 export const IdempotencyStatusList = [
   IdempotencyStatus.IN_PROGRESS,

@@ -7,7 +7,7 @@ import { renderEnumLists } from './render';
 export async function onGenerate(options: GeneratorOptions) {
   try {
     const outputPath = getOutputPath(options);
-    const importPath = String(options.generator.config.importPath ?? '@prisma/client');
+    const importPath = String(options.generator.config.importPath ?? './enums');
     const content = renderEnumLists(options.dmmf.datamodel.enums, importPath);
 
     await fs.mkdir(dirname(outputPath), { recursive: true });
