@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 /*!
- * Prisma Json Types Generator
+ * Prisma Enum List Generator
  * MIT License
- * https://github.com/arthurfiorette/prisma-json-types-generator
  */
 
 require('./dist/generator.js');
