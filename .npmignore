@@ -1,0 +1,15 @@
+# white list approach
+
+*
+
+!LICENSE
+!README.md
+
+!assets/**
+!dist/**
+!index.js
+
+# Declarations (this is a SDK package not meant to be used as a library)
+dist/tsconfig.tsbuildinfo
+dist/**/*.d.ts
+dist/**/*.d.ts.map

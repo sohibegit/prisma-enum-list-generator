@@ -1,0 +1,9 @@
+node_modules/
+dist
+.vscode/settings.json
+.idea
+test/target/
+package-lock.json
+.DS_Store
+yarn.lock
+*.tsbuildinfo

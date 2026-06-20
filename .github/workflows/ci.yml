@@ -1,0 +1,54 @@
+name: Code CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: CI ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Uses LF line endings
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup node and restore cached dependencies
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: Install packages
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint-ci
+
+      - name: Build code
+        run: pnpm build
+
+      - name: Unit tests
+        run: pnpm test-unit
+
+      - name: E2E tests
+        run: pnpm test-e2e
+        env:
+          # Prisma breaks when running tests in parallel
+          PJTG_SEQUENTIAL_TESTS: 1
