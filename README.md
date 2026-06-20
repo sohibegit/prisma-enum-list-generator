@@ -5,9 +5,11 @@ Generates `as const` value lists for every enum in your Prisma schema.
 ```prisma
 generator enumLists {
   provider = "prisma-enum-list-generator"
-  output   = "../src/generated/enum-lists.ts"
 }
 ```
+
+By default, the generator writes `enum-lists.ts` into your Prisma Client output folder. Set
+`output` only if you want a different file or folder.
 
 For this Prisma enum:
 
@@ -36,7 +38,6 @@ Use `importPath` if your Prisma enum exports come from somewhere else:
 ```prisma
 generator enumLists {
   provider   = "prisma-enum-list-generator"
-  output     = "../src/generated/enum-lists.ts"
   importPath = "../prisma/client"
 }
 ```

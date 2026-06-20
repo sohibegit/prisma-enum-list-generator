@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import { dirname, extname, join } from 'node:path';
-import type { GeneratorOptions } from '@prisma/generator';
+import type { GeneratorConfig, GeneratorOptions } from '@prisma/generator';
 import { renderEnumLists } from './render';
 
 /** Runs the generator with the given options. */
@@ -18,12 +18,25 @@ export async function onGenerate(options: GeneratorOptions) {
   }
 }
 
-function getOutputPath(options: GeneratorOptions) {
+export function getOutputPath(options: GeneratorOptions) {
   const output = options.generator.output?.value;
 
-  if (!output) {
-    return join(dirname(options.schemaPath), 'enum-lists.ts');
+  if (output && options.generator.isCustomOutput) {
+    return extname(output) ? output : join(output, 'enum-lists.ts');
   }
 
-  return extname(output) ? output : join(output, 'enum-lists.ts');
+  const client = options.otherGenerators.find(isPrismaClientGenerator);
+  const clientOutput = client?.output?.value;
+
+  if (!clientOutput) {
+    throw new Error('Could not find Prisma Client output for enum-lists.ts');
+  }
+
+  return join(clientOutput, 'enum-lists.ts');
+}
+
+function isPrismaClientGenerator(generator: GeneratorConfig) {
+  const provider = generator.provider.fromEnvVar ?? generator.provider.value;
+
+  return provider === 'prisma-client' || provider === 'prisma-client-js';
 }
